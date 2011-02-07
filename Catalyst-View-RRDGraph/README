@@ -1,63 +1,92 @@
-NAME
-    Catalyst::View::RRDGraph - RRD Graph View Class
+Catalyst::View::RRDGrapUhs(e3r)Contributed Perl DocumentCaattiaolnyst::View::RRDGraph(3)
 
-SYNOPSIS
-    use the helper to create your View myapp_create.pl view RRDGraph
-    RRDGraph
 
-    from the controller:
 
-      sub routine :Local {
-        my ($self, $c) = @_;
-    
-        $c->stash->{'graph'} = [
-                "--lower-limit", "0",
-                "--start", "end-1d",
-                "--vertical-label", "My Label",
-                "--height", 600,
-                "--width", 300,
-                "DEF:Data=/path/to/rrd.rrd:data:AVERAGE",
-                "AREA:Data#0000FF:Data "
-        ];
-        $c->forward('MyApp::View::RRDGraph');
-      }
+NNAAMMEE
+       Catalyst::View::RRDGraph - RRD Graph View Class
 
-DESCRIPTION
-    This view generates RRD graph images from the graph defintion placed in
-    the stash. The controller is responsable of placing an ARRAYREF in
-    $c-stash->{'graph'}> with the same data as to generate a graph with the
-    RRDs module, except for *filename*, that will be automatically generated
-    by the view.
+SSYYNNOOPPSSIISS
+       use the helper to create your View myapp_create.pl view RRDGraph RRD‐
+       Graph
 
-CONFIGURATION
-    Configurations for the view are:
+       from the controller:
 
-  IMG_DIR
-    Directory to generate temporary image files. Defaults to /tmp/
+         sub routine :Local {
+           my ($self, $c) = @_;
 
-  IMG_FORMAT
-    Image format for the generated files. 'PNG' by default.
+           $c->stash->{’graph’} = [
+                   "--lower-limit", "0",
+                   "--start", "end-1d",
+                   "--vertical-label", "My Label",
+                   "--height", 600,
+                   "--width", 300,
+                   "DEF:Data=/path/to/rrd.rrd:data:AVERAGE",
+                   "AREA:Data#0000FF:Data "
+           ];
+           $c->forward(’MyApp::View::RRDGraph’);
+         }
 
-    See http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html for more info.
+DDEESSCCRRIIPPTTIIOONN
+       This view generates RRD graph images from the graph defintion placed in
+       the stash. The controller is responsable of placing an ARRAYREF in
+       $$cc--stash->{’graph’}> with the same data as to generate a graph with the
+       RRDs module, except for _f_i_l_e_n_a_m_e, that will be automatically generated
+       by the view.
 
-AUTHOR
-        Jose Luis Martinez
-        CPAN ID: JLMARTIN
-        CAPSiDE
-        jlmartinez@capside.com
-        http://www.pplusdomain.net
+CCOONNFFIIGGUURRAATTIIOONN
+       Configurations for the view are:
 
-COPYRIGHT
-    This program is free software; you can redistribute it and/or modify it
-    under the same terms as Perl itself.
+       IIMMGG__DDIIRR
 
-    The full text of the license can be found in the LICENSE file included
-    with this module.
+       Directory to generate temporary image files. Defaults to //ttmmpp//
 
-SEE ALSO
-    RRDs: http://oss.oetiker.ch/rrdtool/prog/RRDs.en.html
+       IIMMGG__FFOORRMMAATT
 
-    RRD graph docs: http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html,
-    http://oss.oetiker.ch/rrdtool/doc/rrdgraph_data.en.html,
-    http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html
+       Image format for the generated files. ’PNG’ by default.
 
+       OONN__EERRRROORR__SSEERRVVEE
+
+       On error, if this config value is set, the file to which it points will
+       be served (so you can serve an "error image" file to the user). Alter‐
+       nately, it can be set to a code reference, that will called with $$sseellff,
+       $$cc and $$eerrrroorr. You can then generate your own content in this handler.
+       Default (leaving undefined) is to throw an expception.
+
+       See http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html for more info.
+
+MMEETTHHOODDSS
+       nneeww
+
+       Constructor.
+
+       pprroocceessss
+
+       Called internally by Catalyst when the view is used.
+
+AAUUTTHHOORR
+           Jose Luis Martinez
+           CPAN ID: JLMARTIN
+           CAPSiDE
+           jlmartinez@capside.com
+           http://www.pplusdomain.net
+
+TTHHAANNKKSS
+       To Ton Voon for sending in patches, tests, and ideas.
+
+CCOOPPYYRRIIGGHHTT
+       This program is free software; you can redistribute it and/or modify it
+       under the same terms as Perl itself.
+
+       The full text of the license can be found in the LICENSE file included
+       with this module.
+
+SSEEEE AALLSSOO
+       RRDs: http://oss.oetiker.ch/rrdtool/prog/RRDs.en.html
+
+       RRD graph docs: http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html,
+       http://oss.oetiker.ch/rrdtool/doc/rrdgraph_data.en.html,
+       http://oss.oetiker.ch/rrdtool/doc/rrdgraph_graph.en.html
+
+
+
+perl v5.8.8                       2008-10-26       Catalyst::View::RRDGraph(3)

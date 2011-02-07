@@ -7,3 +7,6 @@ Revision history for Perl module Catalyst::View::RRDGraph
     - Throw Catalyst Exceptions instead of die
     - RRDs returns a 0 byte image file and doesn't set RRDs::error. Detect and throw Exception
     - new ON_ERROR_SERVE attribute
+
+0.03 Sun Oct 26 21:35:00 2008
+    - use base instead of use parent in test suite

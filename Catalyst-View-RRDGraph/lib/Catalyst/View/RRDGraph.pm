@@ -5,7 +5,7 @@ use warnings;
 
 use base 'Catalyst::View';
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use RRDs;
 use File::Temp qw();

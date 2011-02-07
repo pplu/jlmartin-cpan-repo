@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Catalyst-View-RRDGraph
-version:             0.02
+version:             0.03
 abstract:            RRD Graph View Class
 license:             perl
 author:              
