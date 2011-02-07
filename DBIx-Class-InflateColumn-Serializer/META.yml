@@ -1,0 +1,23 @@
+--- #YAML:1.0
+name:               DBIx-Class-InflateColumn-Serializer
+version:            0.02
+abstract:           Inflators to serialize data structures for DBIx::Class
+author:
+    - Jose Luis Martinez (jlmartinez@capside.com)
+license:            perl
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
+build_requires:
+    ExtUtils::MakeMaker:  0
+requires:
+    DBIx::Class:   0
+    Test::Simple:  0.44
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.52
+meta-spec:
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4
