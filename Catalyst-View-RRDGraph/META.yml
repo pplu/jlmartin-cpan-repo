@@ -1,0 +1,16 @@
+--- #YAML:1.0
+name:                Catalyst-View-RRDGraph
+version:             0.01
+abstract:            RRD Graph View Class
+license:             ~
+author:              
+    - Jose Luis Martinez (jlmartinez@capside.com)
+generated_by:        ExtUtils::MakeMaker version 6.44
+distribution_type:   module
+requires:     
+    Catalyst::Plugin::Static::Simple: >= 0.17
+    Catalyst::Runtime:             0
+    Test::Simple:                  0.44
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3
