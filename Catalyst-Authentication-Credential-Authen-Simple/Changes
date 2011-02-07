@@ -16,3 +16,5 @@ Revision history for Perl module Catalyst::Authentication::Credential::Authen::S
     - Modify test suite to not use actions in application classes
       (Patch by Inigo Tejedor Arrondo) (RT #50672)
     - Added Copyright information for Debian compliance (RT #50708)
+0.07 Mon Nov 16 19:07:00 2009
+    - Tests where failing because parent wasn't in Makefile.PL
