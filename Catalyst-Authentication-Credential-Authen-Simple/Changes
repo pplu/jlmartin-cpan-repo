@@ -2,5 +2,6 @@ Revision history for Perl module Catalyst::Authentication::Credential::Authen::S
 
 0.01 Sat Jun 28 13:31:03 2008
     - original version; created by ExtUtils::ModuleMaker 0.51
-
+0.02 Sun Aug 02 17:20:00 2008
+    - use strict and use warnings
 

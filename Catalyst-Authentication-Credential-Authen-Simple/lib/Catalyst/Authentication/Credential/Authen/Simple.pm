@@ -1,6 +1,9 @@
 package Catalyst::Authentication::Credential::Authen::Simple;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
+
+use strict;
+use warnings;
 
 use Authen::Simple;
 use Module::Load;
