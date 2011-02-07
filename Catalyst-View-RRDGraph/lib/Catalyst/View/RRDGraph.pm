@@ -5,7 +5,7 @@ use warnings;
 
 use base 'Catalyst::View';
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use RRDs;
 use File::Temp qw();
@@ -15,6 +15,7 @@ sub new {
     my $config = {
         'IMG_DIR' => '/tmp/',
         'IMG_FORMAT' => 'PNG',
+	'ON_ERROR_SERVE' => undef,
         %{ $class->config },
         (defined($arguments)?%{$arguments}:()),
     };
@@ -44,10 +45,29 @@ sub process {
                 @$props);
 
     if (RRDs::error) {
-        die(RRDs::error);
-    } else {
-        $c->serve_static_file($tempfile->filename);
+        $self->_handle_error($c, RRDs::error);
+	return;
     }
+    if (-s $tempfile->filename == 0) {
+        $self->_handle_error($c, "RRDgraph is 0 bytes");
+	return;
+    }
+
+    $c->serve_static_file($tempfile->filename);
+}
+
+sub _handle_error {
+    my ($self, $c, $error) = @_;
+    if (not defined $self->config->{'ON_ERROR_SERVE'}){
+        Catalyst::Exception->throw($error);
+    } elsif (ref($self->config->{'ON_ERROR_SERVE'}) eq 'CODE') {
+        #Call the custom handler
+        $self->config->{'ON_ERROR_SERVE'}($self, $c, $error);
+    } else {
+        $c->log->error($error);
+        $c->serve_static_file($self->config->{'ON_ERROR_SERVE'});
+    }
+
 }
 
 #################### main pod documentation begin ###################
@@ -96,6 +116,10 @@ Directory to generate temporary image files. Defaults to B</tmp/>
 
 Image format for the generated files. 'PNG' by default. 
 
+=head2 ON_ERROR_SERVE
+
+On error, if this config value is set, the file to which it points will be served (so you can serve an "error image" file to the user). Alternately, it can be set to a code reference, that will called with B<$self>, B<$c> and B<$error>. You can then generate your own content in this handler. Default (leaving undefined) is to throw an expception.
+
 See http://oss.oetiker.ch/rrdtool/doc/rrdgraph.en.html for more info.
 
 =head1 METHODS
@@ -115,6 +139,10 @@ Called internally by Catalyst when the view is used.
     CAPSiDE
     jlmartinez@capside.com
     http://www.pplusdomain.net
+
+=head1 THANKS
+
+To Ton Voon for sending in patches, tests, and ideas.
 
 =head1 COPYRIGHT
 

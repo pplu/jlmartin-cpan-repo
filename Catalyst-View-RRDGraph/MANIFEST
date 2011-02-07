@@ -1,4 +1,5 @@
 Changes
+error_image.png
 lib/Catalyst/Helper/View/RRDGraph.pm
 lib/Catalyst/View/RRDGraph.pm
 LICENSE
@@ -6,6 +7,14 @@ Makefile.PL
 MANIFEST
 README
 t/001_load.t
+t/002_process.t
+t/003_on_error_serve.t
+t/lib/RRDGraphTest003.pm
+t/lib/RRDGraphTest003/Controller/Root.pm
+t/lib/RRDGraphTest003/View/RRDNormal.pm
+t/lib/RRDGraphTest003/View/RRDOnServe.pm
+t/lib/RRDGraphTest003/View/RRDOnServeFunction.pm
+t/lib/RRDs.pm
 t/pod.t
 t/podcoverage.t
 Todo

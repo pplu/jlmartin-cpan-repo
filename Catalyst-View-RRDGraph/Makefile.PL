@@ -11,6 +11,9 @@ WriteMakefile(
     PREREQ_PM    => {
                      'Test::Simple' => 0.44,
                      'Catalyst::Runtime' => 0,
-                     'Catalyst::Plugin::Static::Simple' => '>= 0.17'
+		     'Test::MockObject' => 0,
+                     'Catalyst::Plugin::Static::Simple' => '>= 0.17',
+		     'RRDs' => 0
                     },
+    LICENSE      => 'perl'
 );

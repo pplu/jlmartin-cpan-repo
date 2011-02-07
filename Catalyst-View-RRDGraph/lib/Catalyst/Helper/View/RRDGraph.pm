@@ -1,6 +1,7 @@
 package Catalyst::Helper::View::RRDGraph;
 
 use strict;
+use warnings;
 
 =head1 NAME
 
