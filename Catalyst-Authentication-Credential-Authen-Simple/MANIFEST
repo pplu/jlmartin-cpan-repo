@@ -9,10 +9,14 @@ README
 t/001_load.t
 t/002_apptest.t
 t/003_apptest.t
+t/004_logtest.t
+t/lib/Authen/Simple/Logger.pm
 t/lib/Authen/Simple/OnlyOne.pm
 t/lib/Authen/Simple/Stub.pm
 t/lib/AuthTestApp2.pm
 t/lib/AuthTestApp3.pm
+t/lib/AuthTestApp4.pm
+t/lib/TestLogger.pm
 t/pod.t
 t/podcoverage.t
 Todo

@@ -1,6 +1,6 @@
 package Catalyst::Authentication::Credential::Authen::Simple;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use strict;
 use warnings;
@@ -20,13 +20,29 @@ sub new {
     if (ref($config->{'authen'}) ne 'ARRAY') {
         $config->{'authen'} = [ $config->{'authen'}  ];
     }
+    my $log = $app->log;
 
     my @auth_arr;
     foreach my $auth (@{ $config->{'authen'}  }){
         my $class = "Authen::Simple::$auth->{'class'}";
-        $app->log->debug("Loading class: $class") if $app->debug;
+        $log->debug("Loading class: $class") if $app->debug;
         load $class;
         push @auth_arr, $class->new(%{ $auth->{'args'} });
+    }
+
+    # Catalyst documentation only says that Logger objects SHOULD
+    # implement these methods. $log has to exist, and $log->debug too
+    # (they've been used a couple of lines earlier)
+    if ($log->can('warn') and
+	$log->can('error') and
+	$log->can('debug') and
+	$log->can('info')
+       ){
+        foreach my $auth (@auth_arr){
+            $auth->log($log);
+	}
+    } else {
+        $log->debug('Authen::Simple classes cannot log with the Catalyst log object') if ($app->debug);
     }
 
     $self->{'_config'}->{'password_field'} ||= 'password';
@@ -117,6 +133,8 @@ Just configure your Catalyst App Authentication to use class 'Authen::Simple' as
     }
   }
 
+If the Catalyst log object is compatible with the Authen::Simple log object, Authen::Simple classes will log through Catalyst.
+
 =head2 new
 
 Called by Catalyst::Authentication. Instances the Authen::Simple classes read from the configuration.
@@ -137,6 +155,10 @@ Called by Catalyst::Authentication. Instances the Authen::Simple classes read fr
     CAPSiDE
     jlmartinez@capside.com
     http://www.pplusdomain.net
+
+=head1 THANKS
+
+Tobjorn Lindahl, Dylan Martin for patches and recommedations
 
 =head1 COPYRIGHT
 
