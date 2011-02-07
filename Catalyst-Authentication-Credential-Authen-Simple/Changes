@@ -4,4 +4,5 @@ Revision history for Perl module Catalyst::Authentication::Credential::Authen::S
     - original version; created by ExtUtils::ModuleMaker 0.51
 0.02 Sun Aug 02 17:20:00 2008
     - use strict and use warnings
-
+0.03 Wed Apr 01 21:02:00 2009
+    - updated a couple of $c->log->debug(..) to $c->log->debug(..) if $c->debug;

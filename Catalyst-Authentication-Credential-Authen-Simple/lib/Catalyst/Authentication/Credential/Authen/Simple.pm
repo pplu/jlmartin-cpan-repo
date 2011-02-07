@@ -1,6 +1,6 @@
 package Catalyst::Authentication::Credential::Authen::Simple;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use strict;
 use warnings;
@@ -24,7 +24,7 @@ sub new {
     my @auth_arr;
     foreach my $auth (@{ $config->{'authen'}  }){
         my $class = "Authen::Simple::$auth->{'class'}";
-        $app->log->debug("Loading class: $class");
+        $app->log->debug("Loading class: $class") if $app->debug;
         load $class;
         push @auth_arr, $class->new(%{ $auth->{'args'} });
     }
@@ -60,10 +60,10 @@ sub authenticate {
     }
 
     if ($self->{'_auth'}->authenticate($user, $password)){
-        $c->log->debug("User $user Authenticated");
+        $c->log->debug("User $user Authenticated") if $c->debug;
         return $user_obj;
     } else {
-        $c->log->debug("None of the Authen::Simple classes authed $user");
+        $c->log->debug("None of the Authen::Simple classes authed $user") if $c->debug;;
         return;
     }
 }
