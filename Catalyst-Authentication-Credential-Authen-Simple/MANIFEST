@@ -14,8 +14,11 @@ t/lib/Authen/Simple/Logger.pm
 t/lib/Authen/Simple/OnlyOne.pm
 t/lib/Authen/Simple/Stub.pm
 t/lib/AuthTestApp2.pm
+t/lib/AuthTestApp2/Controller/Root.pm
 t/lib/AuthTestApp3.pm
+t/lib/AuthTestApp3/Controller/Root.pm
 t/lib/AuthTestApp4.pm
+t/lib/AuthTestApp4/Controller/Root.pm
 t/lib/TestLogger.pm
 t/pod.t
 t/podcoverage.t

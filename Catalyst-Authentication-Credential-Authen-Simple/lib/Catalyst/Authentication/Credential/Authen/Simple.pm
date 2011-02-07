@@ -1,6 +1,6 @@
 package Catalyst::Authentication::Credential::Authen::Simple;
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 use strict;
 use warnings;
@@ -158,9 +158,11 @@ Called by Catalyst::Authentication. Instances the Authen::Simple classes read fr
 
 =head1 THANKS
 
-Tobjorn Lindahl, Dylan Martin and Tomas Doran for patches and recommedations
+Tobjorn Lindahl, Dylan Martin, Tomas Doran and Inigo Tejedor Arrondo for patches and recommedations
 
 =head1 COPYRIGHT
+
+Copyright (c) 2008 by Jose Luis Martinez Torres
 
 This program is free software; you can redistribute
 it and/or modify it under the same terms as Perl itself.

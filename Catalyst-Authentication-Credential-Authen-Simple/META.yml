@@ -1,18 +1,26 @@
 --- #YAML:1.0
-name:                Catalyst-Authentication-Credential-Authen-Simple
-version:             0.05
-abstract:            Verify credentials with the Authen::Simple framework
-license:             perl
-author:              
+name:               Catalyst-Authentication-Credential-Authen-Simple
+version:            0.06
+abstract:           Verify credentials with the Authen::Simple framework
+author:
     - Jose Luis Martinez (jlmartinez@capside.com)
-generated_by:        ExtUtils::MakeMaker version 6.44
-distribution_type:   module
-requires:     
-    Authen::Simple:                0
-    Catalyst::Plugin::Authentication: >= 1.0
-    Catalyst::Runtime:             5.7
-    Test::More:                    0
-    Test::Simple:                  0.44
+license:            perl
+distribution_type:  module
+configure_requires:
+    ExtUtils::MakeMaker:  0
+build_requires:
+    ExtUtils::MakeMaker:  0
+requires:
+    Authen::Simple:       0
+    Catalyst::Plugin::Authentication:  >= 1.0
+    Catalyst::Runtime:    5.7
+    Test::More:           0
+    Test::Simple:         0.44
+no_index:
+    directory:
+        - t
+        - inc
+generated_by:       ExtUtils::MakeMaker version 6.52
 meta-spec:
-    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
-    version: 1.3
+    url:      http://module-build.sourceforge.net/META-spec-v1.4.html
+    version:  1.4

@@ -1,5 +1,6 @@
-package AuthTestApp2;
+package AuthTestApp4;
 
+use TestLogger;
 use Catalyst qw/Authentication/;
 
 __PACKAGE__->config->{'Plugin::Authentication'} = {
@@ -16,15 +17,14 @@ __PACKAGE__->config->{'Plugin::Authentication'} = {
         'class' => 'Authen::Simple',
         'authen' => [
           {
-            'class' => 'OnlyOne',
-            'args' => {
-              'pass' => 'uniquepass'
-            }
-          }
+            'class' => 'Logger'
+          },
         ],
       }
     }
   }
 };
+
+__PACKAGE__->log( TestLogger->new );
 
 __PACKAGE__->setup();
