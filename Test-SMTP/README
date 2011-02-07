@@ -1,0 +1,204 @@
+NAME
+    Test::SMTP - Module for writing SMTP Server tests
+
+SYNOPSIS
+        use Test::SMTP;
+
+        plan tests => 10;
+        # Constructors
+        my $client1 = Test::SMTP->connect_ok('connect to mailhost',
+                                             Host => '127.0.0.1', AutoHello => 1);
+        $client1->mail_from_ok('test@example.com', 'Accept an example mail from');
+        $client1->rcpt_to_ko('test2@example.com', 'Reject an example domain in rcpt to');
+        $client1->quit_ok('Quit OK');
+        my $client2 = Test::SMTP->connect_ok('connect to mailhost',
+                                             Host => '127.0.0.1', AutoHello => 1);
+        ...
+
+DESCRIPTION
+    This module is designed for easily building tests for SMTP servers.
+
+    Test::SMTP is a subclass of Net::SMTP, that in turn is a subclass of
+    Net::Cmd and IO::Socket::INET. Don't be too confident of it beeing a
+    Net::SMTP subclass for too much time, though.
+
+PLAN
+    plan
+        Plan tests a la Test::More. Exported on demand (not necessary to
+        export if you are already using a test module that exports plan).
+
+          use Test::SMTP qw(plan);
+          plan tests => 5;
+
+CONSTRUCTOR
+    connect_ok($name, Host => $host, AutoHello => 1, [ Timeout => 1 ])
+        Passes if the client connects to the SMTP Server. Everything after
+        *name* is passed to the Net::SMTP *new* method. returns a Test::SMTP
+        object.
+
+        Net::SMTP parameters of interest: Port => $port (connect to
+        non-standard SMTP port) Hello => 'my (he|eh)lo' hello to send to the
+        server Debug => 1 Outputs via STDERR the conversation with the
+        server
+
+        You have to pass AutoHello => 1, this will enable auto EHLO/HELO
+        negotiation.
+
+    connect_ko($name, Host => $host, [ Timeout => 1 ])
+        Passes test if the client does not connect to the SMTP Server.
+        Everything after *name* is passed to the Net::SMTP *new* method.
+
+TEST METHODS
+    code_is ($expected, $name)
+        Passes if the last SMTP code returned by the server was *expected*.
+
+    code_isnt ($expected, $name)
+        Passes if the last SMTP code returned by the server was'nt
+        *expected*.
+
+    code_is_success($name)
+        Passes if the last SMTP code returned by the server indicates
+        success.
+
+    code_isnt_success($name)
+        Passes if the last SMTP code returned by the server doesn't indicate
+        success.
+
+    code_is_failure($name)
+        Passes if the last SMTP code returned by the server indicates
+        failure (either temporary or permanent).
+
+    code_isnt_failure($name)
+        Passes if the last SMTP code returned by the server doesn't indicate
+        failure (either temporary or permanent).
+
+    code_is_temporary($name)
+        Passes if the last SMTP code returned by the server indicates
+        temporary failure
+
+    code_isnt_temporary($name)
+        Passes if the last SMTP code returned by the server doesn't indicate
+        temporary failure
+
+    code_is_permanent($name)
+        Passes if the last SMTP code returned by the server indicates
+        permanent failure
+
+    code_isnt_permanent($name)
+        Passes if the last SMTP code returned by the server doesn't indicate
+        permanent failure
+
+    message_like(qr/REGEX/, $name)
+        Passes if the last SMTP message returned by the server matches the
+        regex.
+
+    message_unlike(qr/REGEX/, $name)
+        Passes if the last SMTP message returned by the server does'nt match
+        the regex.
+
+    rset_ok($name)
+        Send a RSET command to the server. Pass if command was successful
+
+    rset_ko($name)
+        Send an RSET to the server. Pass if command was not successful
+
+    supports_ok($capa, $name)
+        Passes test if server said it supported *capa* capability on ESMTP
+        EHLO
+
+    supports_ko($capa, $name)
+        Passes test if server didn't say it supported *capa* capability on
+        ESMTP EHLO
+
+    supports_cmp_ok($capability, $operator, $expected, $name)
+        Compares server *capa* capability extra information with *operator*
+        against *expected*.
+
+    supports_like($capability, qr/REGEX/, $name)
+        Passes if server *capa* capability extra information matches against
+        *REGEX*.
+
+    supports_unlike($capability, qr/REGEX/, $name)
+        Passes if server *capa* capability extra information doesn't match
+        against *REGEX*.
+
+    banner_like(qr/REGEX/, $name)
+        Passes if server banner matches against *REGEX*.
+
+    banner_unlike(qr/REGEX/, $name)
+        Passes if server banner doesn't match against *REGEX*.
+
+    domain_like(qr/REGEX/, $name)
+        Passes if server's announced domain matches against *REGEX*.
+
+    domain_unlike(qr/REGEX/, $name)
+        Passes if server's announced domain doesn't match against *REGEX*.
+
+    mail_from_ok($from, $name)
+        Sends a MAIL FROM: *from* to the server. Passes if the command
+        succeeds
+
+    mail_from_ko($from, $name)
+        Sends a MAIL FROM: *from* to the server. Passes if the command isn't
+        successful
+
+    rcpt_to_ok($to, $name)
+        Sends a RCPT TO: *to* to the server. Passes if the command succeeds
+
+    rcpt_to_ko($to, $name)
+        Sends a RCPT TO: *to* to the server. Passes if the command isn't
+        successful
+
+    data_ok($name)
+        Sends a DATA command to the server. Passes if the command is
+        successful. After calling this method, you should call datasend.
+
+    data_ko($name)
+        Sends a DATA command to the server. Passes if the command is'nt
+        successful
+
+    dataend_ok($name)
+        Sends a .<CR><LF> command to the server. Passes if the command is
+        successful.
+
+    dataend_ok($name)
+        Sends a .<CR><LF> command to the server. Passes if the command is
+        not successful.
+
+    help_like([HELP_ON], qr/REGEX/, $name)
+        Sends HELP *HELP_ON* command to the server. If the returned text
+        matches *REGEX*, the test passes. To test plain HELP command, pass
+        undef in HELP_ON.
+
+    help_unlike([HELP_ON], qr/REGEX/, $name)
+        Sends HELP *HELP_ON* command to the server. If the returned text
+        doesn't match *REGEX*, the test passes. To test plain HELP command,
+        pass undef in HELP_ON.
+
+    quit_ok($name)
+        Send a QUIT command to the server. Pass if command was successful
+
+    quit_ko($name)
+        Send a QUIT command to the server. Pass if command was'nt successful
+
+NON TEST METHODS
+    mail_from($from)
+        Issues a MAIL FROM: *from* command to the server.
+
+    rcpt_to($to)
+        Issues a RCPT TO: *to* command to the server.
+
+AUTHOR
+        Jose Luis Martinez
+        CAPSiDE
+        jlmartinez@capside.com
+        http://www.pplusdomain.net/
+        http://www.capside.com/
+
+COPYRIGHT
+    This program is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
+    The full text of the license can be found in the LICENSE file included
+    with this module.
+

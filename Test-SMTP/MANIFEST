@@ -1,0 +1,16 @@
+MANIFEST
+README
+LICENSE
+Todo
+Changes
+Makefile.PL
+lib/Test/SMTP.pm
+t/001_load.t
+t/002_cantconnect.t
+t/003_basic.t
+t/004_autohello.t
+t/005_fail_tests.t
+t/006_plan.t
+t/pod.t
+t/Net/Server/Mail/ESMTP/SIZE.pm
+META.yml                                 Module meta-data (added by MakeMaker)

@@ -1,0 +1,18 @@
+# http://module-build.sourceforge.net/META-spec.html
+#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
+name:         Test-SMTP
+version:      0.01
+version_from: lib/Test/SMTP.pm
+installdirs:  site
+requires:
+    Net::Server::Mail:             0.13
+    Net::SMTP:                     0
+    Test::Builder::Module:         0
+    Test::Builder::Tester:         1.02
+    Test::Exception:               0.21
+    Test::More:                    0.62
+    Test::Pod:                     1
+    Test::Simple:                  0.44
+
+distribution_type: module
+generated_by: ExtUtils::MakeMaker version 6.30_01
