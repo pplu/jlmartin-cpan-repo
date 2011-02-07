@@ -9,3 +9,6 @@ Revision history for Perl module Catalyst::Authentication::Credential::Authen::S
 0.04 Thu Apr 23 20:12:00 2009
     - If Catalyst logger is compatible with Authen::Simple classes, then use the
       Catalyst logger to do the logging. Tests and docs updated to reflect that.
+0.05 Fri Apr 24 19:42:00 2009
+    - use Catalyst::Utils::ensure_class_loaded instead of Module::Load
+

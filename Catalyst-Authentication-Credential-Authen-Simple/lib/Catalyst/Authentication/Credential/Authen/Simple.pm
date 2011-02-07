@@ -1,12 +1,12 @@
 package Catalyst::Authentication::Credential::Authen::Simple;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use strict;
 use warnings;
 
 use Authen::Simple;
-use Module::Load;
+use Catalyst::Utils;
 
 sub new {
     my ($class, $config, $app, $realm) = @_;
@@ -26,7 +26,7 @@ sub new {
     foreach my $auth (@{ $config->{'authen'}  }){
         my $class = "Authen::Simple::$auth->{'class'}";
         $log->debug("Loading class: $class") if $app->debug;
-        load $class;
+        Catalyst::Utils::ensure_class_loaded($class);
         push @auth_arr, $class->new(%{ $auth->{'args'} });
     }
 
@@ -42,7 +42,7 @@ sub new {
             $auth->log($log);
 	}
     } else {
-        $log->debug('Authen::Simple classes cannot log with the Catalyst log object') if ($app->debug);
+        $log->debug('Authen::Simple classes cannot log with the configured Catalyst log object') if ($app->debug);
     }
 
     $self->{'_config'}->{'password_field'} ||= 'password';
@@ -158,7 +158,7 @@ Called by Catalyst::Authentication. Instances the Authen::Simple classes read fr
 
 =head1 THANKS
 
-Tobjorn Lindahl, Dylan Martin for patches and recommedations
+Tobjorn Lindahl, Dylan Martin and Tomas Doran for patches and recommedations
 
 =head1 COPYRIGHT
 

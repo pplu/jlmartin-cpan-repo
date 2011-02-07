@@ -12,8 +12,7 @@ WriteMakefile(
                      'Test::Simple' => 0.44,
 		     'Test::More'   => 0,
 		     'Authen::Simple' => 0,
-		     'Module::Load' => 0,
-		     'Catalyst::Runtime' => 0,
+		     'Catalyst::Runtime' => 5.7,
 		     'Catalyst::Plugin::Authentication' => '>= 1.0'
                     },
     LICENSE      => 'perl'

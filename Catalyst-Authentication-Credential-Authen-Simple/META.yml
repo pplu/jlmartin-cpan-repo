@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Catalyst-Authentication-Credential-Authen-Simple
-version:             0.04
+version:             0.05
 abstract:            Verify credentials with the Authen::Simple framework
 license:             perl
 author:              
@@ -10,8 +10,7 @@ distribution_type:   module
 requires:     
     Authen::Simple:                0
     Catalyst::Plugin::Authentication: >= 1.0
-    Catalyst::Runtime:             0
-    Module::Load:                  0
+    Catalyst::Runtime:             5.7
     Test::More:                    0
     Test::Simple:                  0.44
 meta-spec:
