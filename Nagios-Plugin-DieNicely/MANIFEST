@@ -1,0 +1,22 @@
+Changes
+lib/Nagios/Plugin/DieNicely.pm
+LICENSE
+Makefile.PL
+MANIFEST
+README
+t/001_load.t
+t/002_test_outputs.t
+t/bin/confess_in_extmodule.pl
+t/bin/confess_in_module.pl
+t/bin/confess_in_script.pl
+t/bin/croak_in_extmodule.pl
+t/bin/croak_in_module.pl
+t/bin/croak_in_script.pl
+t/bin/die_in_extmodule.pl
+t/bin/die_in_module.pl
+t/bin/die_in_script.pl
+t/lib/FakeModule.pm
+t/pod.t
+t/podcoverage.t
+Todo
+META.yml                                 Module meta-data (added by MakeMaker)
