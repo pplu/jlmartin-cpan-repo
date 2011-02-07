@@ -12,3 +12,7 @@ Revision history for Perl module Test::SMTP
       "port already in use"
     - First shot at STARTTLS support
     - Auth support (now inheriting from Net::SMTP_auth instead of Net::SMTP)
+0.04 Wed May 28 20:20:00 2008
+    - Cleaned the use IO::Socket::SSL (was for testing)
+    - Cleaned verbosity of IO::Socket::SSL
+    - Declared dependancy on IO::Socket::SSL (Tests where failing)

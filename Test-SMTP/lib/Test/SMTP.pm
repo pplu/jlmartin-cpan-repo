@@ -10,7 +10,7 @@ BEGIN {
     use Test::Builder::Module;
 
     use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    $VERSION     = '0.03';
+    $VERSION     = '0.04';
     @ISA         = qw(Net::SMTP_auth Test::Builder::Module);
     #Give a hoot don't pollute, do not export more than needed by default
     @EXPORT      = qw();
@@ -426,7 +426,6 @@ sub starttls_ko {
 
 sub _convert_to_ssl {
     my ($self) = @_;
-    use IO::Socket::SSL qw(debug4);
     require IO::Socket::SSL or die "starttls requires IO::Socket::SSL";
     # the socket is stored in ${*self}{'_ssl_sock'}.
     # If not, when starttls sub ends *$self is not tied to the SSL

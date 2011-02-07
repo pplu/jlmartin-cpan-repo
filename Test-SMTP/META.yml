@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Test-SMTP
-version:             0.03
+version:             0.04
 abstract:            Module to write SMTP Server tests
 license:             perl
 author:              
@@ -8,6 +8,7 @@ author:
 generated_by:        ExtUtils::MakeMaker version 6.44
 distribution_type:   module
 requires:     
+    IO::Socket::SSL:               1.01
     Net::Server::Mail:             0.13
     Net::Server::Mail::ESMTP::AUTH: 0
     Net::SMTP_auth:                0

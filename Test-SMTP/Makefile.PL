@@ -18,7 +18,8 @@ WriteMakefile(
                      'Net::Server::Mail'              => 0.13,
 		     'Net::Server::Mail::ESMTP::AUTH' => 0,
                      'Test::Pod'                      => 1.00,
-		     'Test::Pod::Coverage'            => 1.00
+		     'Test::Pod::Coverage'            => 1.00,
+		     'IO::Socket::SSL'                => 1.01 
                     },
     LICENSE      => 'perl'
 );

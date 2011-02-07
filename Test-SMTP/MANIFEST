@@ -1,4 +1,6 @@
 Changes
+examples/send_mail.pl
+examples/start_tls.pl
 lib/Test/SMTP.pm
 LICENSE
 Makefile.PL
