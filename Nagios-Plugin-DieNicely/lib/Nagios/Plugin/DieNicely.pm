@@ -5,7 +5,7 @@ use strict;
 
 BEGIN {
      use vars qw($VERSION);
-     $VERSION     = '0.02';
+     $VERSION     = '0.03';
 }
 
 our ($wanted_exit, $exit_description);
@@ -32,6 +32,7 @@ sub import {
 
 
 sub _nagios_die {
+    die @_ if $^S;
     if (not defined $wanted_exit){
         # If someone only requires the module, and import is not called,
 	# wanted_exit would be undefined. We also get here when the 
@@ -63,7 +64,7 @@ Nagios::Plugin::DieNicely - Die in a Nagios output compatible way
 
 =head1 DESCRIPTION
 
-When your Nagios plugins, or the modules that they use raise an exception with I<die>, I<croak> or I<confess>, the exception gets lost, and Nagios treats the output as an UNKNOWN state with no output from the plugin, as STDERR gets discarded by Nagios.
+When your Nagios plugins, or the modules that they use raise an unhandled exception with I<die>, I<croak> or I<confess>, the exception gets lost, and Nagios treats the output as an UNKNOWN state with no output from the plugin, as STDERR gets discarded by Nagios.
 
 This module overrides perl's default behaviour of using exit code 255 and printing the error to STDERR (not Nagios friendly). Just using for exit code 2 (Nagios CRITICAL), and outputing the error to STDOUT with "CRITICAL - " prepended to the exception. Note that you can change the CRITICAL for WARNING, or even OK (not recommended)
 

@@ -58,6 +58,15 @@ my $tests = [
 	{ 'plugin' => './t/bin/unknown_croak_in_extmodule.pl', text => 'croaked and Nagios can detect me', ecode => 3 },
 	{ 'plugin' => './t/bin/unknown_confess_in_extmodule.pl', text => 'confessed and Nagios can detect me', ecode => 3 },
 
+	# TESTS OF EXCEPTIONS THAT SHOULDN'T BE DETECTED BY Nagios::Plugin::DieNicely
+	
+	{ 'plugin' => './t/bin/caughtdie_in_script.pl',    text => 'OK', ecode => 0 },
+	{ 'plugin' => './t/bin/caughtdie_in_module.pl',    text => 'OK', ecode => 0 },
+	{ 'plugin' => './t/bin/caughtdie_in_extmodule.pl', text => 'OK', ecode => 0 },
+	{ 'plugin' => './t/bin/extmodule_that_catches_die.pl', text => 'OK', ecode => 0 },
+        { 'plugin' => './t/bin/extmodule_that_catches_croak.pl', text => 'OK', ecode => 0 },
+	{ 'plugin' => './t/bin/extmodule_that_catches_confess.pl', text => 'OK', ecode => 0 },
+
 	#Misuse of the module
 	{ 'plugin' => './t/bin/misuse.pl', text => 'Nagios::Plugin::DieNicely doesn\'t know how to exit NOTANAGIOSSTATE', ecode => 2 },
 ];

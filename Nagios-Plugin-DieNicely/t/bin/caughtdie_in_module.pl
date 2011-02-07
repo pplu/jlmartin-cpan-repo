@@ -2,7 +2,12 @@
 
 use Nagios::Plugin::DieNicely;
 
-my $obj = MyModule->new();
+eval {
+   my $obj = MyModule->new();
+};
+
+print "OK";
+exit 0;
 
 package MyModule;
 

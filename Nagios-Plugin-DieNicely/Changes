@@ -5,3 +5,5 @@ Revision history for Perl module Nagios::Plugin::DieNicely
 0.02 Tue Jun 10 21:45:00 2008
     - let module user specify the desired Nagios exit status
     - better testing (use $^X) to lauch correct perl interpreter
+0.03 Tue Dec 02 17:10:00 2008
+    - don't catch dies that are in eval blocks

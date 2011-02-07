@@ -8,6 +8,9 @@ MANIFEST
 README
 t/001_load.t
 t/002_test_outputs.t
+t/bin/caughtdie_in_extmodule.pl
+t/bin/caughtdie_in_module.pl
+t/bin/caughtdie_in_script.pl
 t/bin/critical_confess_in_extmodule.pl
 t/bin/critical_confess_in_module.pl
 t/bin/critical_confess_in_script.pl
@@ -26,6 +29,9 @@ t/bin/explicit_crit_croak_in_script.pl
 t/bin/explicit_crit_die_in_extmodule.pl
 t/bin/explicit_crit_die_in_module.pl
 t/bin/explicit_crit_die_in_script.pl
+t/bin/extmodule_that_catches_confess.pl
+t/bin/extmodule_that_catches_croak.pl
+t/bin/extmodule_that_catches_die.pl
 t/bin/misuse.pl
 t/bin/ok_confess_in_extmodule.pl
 t/bin/ok_confess_in_module.pl

@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Nagios-Plugin-DieNicely
-version:             0.02
+version:             0.03
 abstract:            Die in a Nagios compatible fashion
 license:             perl
 author:              

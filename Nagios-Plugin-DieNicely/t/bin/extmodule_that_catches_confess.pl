@@ -5,6 +5,9 @@ use FakeModule;
 
 my $obj = FakeModule->new();
 
-$obj->mycroak();
+$obj->eval_dontconfess();
+
+print "OK";
+exit 0;
 
 1;
