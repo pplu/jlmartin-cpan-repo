@@ -12,5 +12,6 @@ t/004_autohello.t
 t/005_fail_tests.t
 t/006_plan.t
 t/pod.t
+t/podcoverage.t
 t/Net/Server/Mail/ESMTP/SIZE.pm
 META.yml                                 Module meta-data (added by MakeMaker)

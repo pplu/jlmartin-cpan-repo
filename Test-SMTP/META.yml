@@ -1,7 +1,7 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         Test-SMTP
-version:      0.01
+version:      0.02
 version_from: lib/Test/SMTP.pm
 installdirs:  site
 requires:
@@ -12,6 +12,7 @@ requires:
     Test::Exception:               0.21
     Test::More:                    0.62
     Test::Pod:                     1
+    Test::Pod::Coverage:           1
     Test::Simple:                  0.44
 
 distribution_type: module

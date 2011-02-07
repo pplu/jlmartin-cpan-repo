@@ -7,6 +7,7 @@ use Net::Server::Mail::ESMTP;
 use Net::Server::Mail::ESMTP::SIZE;
 use Test::SMTP;
 use Test::More;
+use Sys::Hostname;
 
 plan tests => 85;
 
@@ -122,7 +123,8 @@ my $c1 = Test::SMTP->connect_ok("connects to SMTP on $LOCAL_PORT",
 $c1->banner_like(qr/Net::Server::Mail/, 'Passes if banner has the Net::Server::Mail string');
 $c1->banner_unlike(qr/This is an open relay/, 'Passes if banner does not have \'open relay\' string');
 
-$c1->domain_like(qr/n2101/, 'Passes if domain is n2101');
+my $hostname = hostname();
+$c1->domain_like(qr/$hostname/, "Passes if domain is $hostname");
 $c1->domain_unlike(qr/example.com/, 'Passes if domain is not example.com');
 
 $c1->supports_ok('8BITMIME',   'Passes if server announces 8BITMIME');

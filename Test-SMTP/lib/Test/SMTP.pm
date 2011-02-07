@@ -10,7 +10,7 @@ BEGIN {
     use Test::Builder::Module;
 
     use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    $VERSION     = '0.01';
+    $VERSION     = '0.02';
     @ISA         = qw(Net::SMTP Test::Builder::Module);
     #Give a hoot don't pollute, do not export more than needed by default
     @EXPORT      = qw();
@@ -173,7 +173,7 @@ sub code_is_success {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -189,7 +189,7 @@ sub code_isnt_success {
 
     if (_is_between($self->code(), 200, 399)){
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     } else {
         $tb->ok(1, $name);
     }
@@ -210,7 +210,7 @@ sub code_is_failure {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -227,7 +227,7 @@ sub code_isnt_failure {
 
     if (not _is_between($self->code(), 200, 399)){
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     } else {
         $tb->ok(1, $name);
     }
@@ -247,7 +247,7 @@ sub code_is_temporary {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -263,7 +263,7 @@ sub code_isnt_temporary {
 
     if (_is_between($self->code(), 400, 499)){
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     } else {
         $tb->ok(1, $name);
     }
@@ -283,7 +283,7 @@ sub code_is_permanent {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -299,7 +299,7 @@ sub code_isnt_permanent {
 
     if (_is_between($self->code(), 500, 599)){
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     } else {
         $tb->ok(1, $name);
     }
@@ -347,7 +347,7 @@ sub rset_ok {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -363,7 +363,7 @@ sub rset_ko {
 
     if ($self->reset){
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     } else {
         $tb->ok(1, $name);
     }
@@ -512,7 +512,7 @@ sub mail_from_ok {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -530,7 +530,7 @@ sub mail_from_ko {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -548,7 +548,7 @@ sub rcpt_to_ok {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -566,7 +566,7 @@ sub rcpt_to_ko {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -585,7 +585,7 @@ sub data_ok {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -603,7 +603,7 @@ sub data_ko {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -629,11 +629,11 @@ sub dataend_ok {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag();
+        $self->_smtp_diag();
     }
 }
 
-=item dataend_ok($name)
+=item dataend_ko($name)
 
 Sends a .<CR><LF> command to the server. Passes if the command is not successful.
 
@@ -647,7 +647,7 @@ sub dataend_ko {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag();
+        $self->_smtp_diag();
     }
 }
 
@@ -693,7 +693,7 @@ sub quit_ok {
         $tb->ok(1, $name);
     } else {
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     }
 }
 
@@ -709,7 +709,7 @@ sub quit_ko {
     $self->quit();
     if (_is_between($self->code(), 200, 399)){
         $tb->ok(0, $name);
-        $self->smtp_diag;
+        $self->_smtp_diag;
     } else {
         $tb->ok(1, $name);
     }
@@ -720,7 +720,7 @@ sub _is_between {
     return ($what >= $start and $what <= $end);
 }
 
-sub smtp_diag {
+sub _smtp_diag {
     my $self = shift;
     my $tb = __PACKAGE__->builder();
     $tb->diag(sprintf("  Got from server %s %s\n", $self->code, $self->message));

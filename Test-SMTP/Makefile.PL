@@ -16,6 +16,7 @@ WriteMakefile(
                      'Test::Builder::Tester' => 1.02,
                      'Test::Exception'       => 0.21,
                      'Net::Server::Mail'     => 0.13,
-                     'Test::Pod'             => 1.00
+                     'Test::Pod'             => 1.00,
+		     'Test::Pod::Coverage'   => 1.00
                     },
 );
