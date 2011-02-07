@@ -7,3 +7,8 @@ Revision history for Perl module Test::SMTP
     - added a Test::Pod::Coverage test
     - corrected documentation (thanks to Test::Pod::Coverage)
     - renamed smtp_diag to make it clear it's private
+0.03 Tue May 27 22:00:00 2008
+    - Tests now try to find a port to bind to. Testers were getting
+      "port already in use"
+    - First shot at STARTTLS support
+    - Auth support (now inheriting from Net::SMTP_auth instead of Net::SMTP)

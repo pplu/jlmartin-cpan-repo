@@ -6,12 +6,12 @@ use warnings;
 BEGIN {
     use Exporter ();
     use Carp;
-    use Net::SMTP;
+    use Net::SMTP_auth;
     use Test::Builder::Module;
 
     use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    $VERSION     = '0.02';
-    @ISA         = qw(Net::SMTP Test::Builder::Module);
+    $VERSION     = '0.03';
+    @ISA         = qw(Net::SMTP_auth Test::Builder::Module);
     #Give a hoot don't pollute, do not export more than needed by default
     @EXPORT      = qw();
     @EXPORT_OK   = qw(plan);
@@ -43,8 +43,11 @@ Test::SMTP - Module for writing SMTP Server tests
 
 This module is designed for easily building tests for SMTP servers.
 
-Test::SMTP is a subclass of Net::SMTP, that in turn is a subclass of Net::Cmd
-and IO::Socket::INET. Don't be too confident of it beeing a Net::SMTP subclass for too much time, though.
+Test::SMTP is a subclass of Net::SMTP_auth, that is a subclass of Net::SMTP, 
+that in turn is a subclass of Net::Cmd and IO::Socket::INET. Don't be too confident 
+of it beeing a Net::SMTP_auth subclass for too much time, though (v 0.03 changed from
+Net::SMTP to Net::SMTP_auth so you can control authentication tests better). Compatibility
+will always try to be kept so you can still call the subclass methods.
 
 =head1 PLAN
 
@@ -52,7 +55,7 @@ and IO::Socket::INET. Don't be too confident of it beeing a Net::SMTP subclass f
 
 =item plan
 
-Plan tests a la Test::More. Exported on demand (not necessary to export if you are already using a test module that exports plan). 
+Plan tests a la Test::More. Exported on demand (not necessary to export if you are already using a test module that exports I<plan>). 
 
   use Test::SMTP qw(plan);
   plan tests => 5;
@@ -72,9 +75,9 @@ sub plan {
 
 =item connect_ok($name, Host => $host, AutoHello => 1, [ Timeout => 1 ])
 
-Passes if the client connects to the SMTP Server. Everything after I<name> is passed to the Net::SMTP I<new> method. returns a Test::SMTP object. 
+Passes if the client connects to the SMTP Server. Everything after I<name> is passed to the Net::SMTP_auth I<new> method. returns a Test::SMTP object. 
 
-Net::SMTP parameters of interest: 
+Net::SMTP_auth parameters of interest: 
 Port => $port (connect to non-standard SMTP port)
 Hello => 'my (he|eh)lo' hello to send to the server
 Debug => 1 Outputs via STDERR the conversation with the server
@@ -90,7 +93,7 @@ sub connect_ok {
         croak "Can only handle AutoHello for now...";
     }
 
-    my $smtp = Net::SMTP->new(%params);
+    my $smtp = Net::SMTP_auth->new(%params);
 
     my $tb = __PACKAGE__->builder();
     $tb->ok(defined $smtp, $name);
@@ -105,14 +108,14 @@ sub connect_ok {
 
 =item connect_ko($name, Host => $host, [ Timeout => 1 ])
 
-Passes test if the client does not connect to the SMTP Server. Everything after I<name> is passed to the Net::SMTP I<new> method.
+Passes test if the client does not connect to the SMTP Server. Everything after I<name> is passed to the Net::SMTP_auth I<new> method.
 
 =cut
 
 sub connect_ko {
     my ($class, $name, @params) = @_;
 
-    my $smtp = Net::SMTP->new(@params);
+    my $smtp = Net::SMTP_auth->new(@params);
     my $tb = __PACKAGE__->builder();
 
     $tb->ok(not(defined $smtp), $name);
@@ -332,6 +335,144 @@ sub message_unlike {
     my $message = $self->message();
     $tb->unlike($message, $expected, $name);
 }
+
+=item auth_ok($method, $user, $password, $name)
+
+Passes if I<$user> with I<$password> with SASL method I<$method>
+is AUTHorized on the server.
+
+=cut
+
+sub auth_ok {
+    my ($self, $method, $user, $password, $name) = @_;
+    my $tb = __PACKAGE__->builder();
+
+    my $result = $self->auth($method, $user, $password);
+    if ($result){
+        $tb->ok(1, $name);
+    } else {
+        $tb->ok(0, $name);
+	$self->_smtp_diag;
+    }
+}
+
+=item auth_ko($method, $user, $password, $name)
+
+Passes if I<$user> with I<$password> with SASL method I<$method> 
+is not AUTHorized on the server.
+
+=cut
+
+sub auth_ko {
+    my ($self, $method, $user, $password, $name) = @_;
+    my $tb = __PACKAGE__->builder();
+
+    my $result = $self->auth($method, $user, $password);
+    if ($result){
+        $tb->ok(0, $name);
+        $self->_smtp_diag;
+    } else {
+        $tb->ok(1, $name);
+    }
+}
+
+=item starttls_ok($name)
+
+Start TLS conversation with the server. Pass if server said that it's OK to start TLS and the SSL negotiation went OK.
+
+=cut
+
+sub starttls_ok {
+    my ($self, $name) = @_;
+    my $tb = __PACKAGE__->builder();
+
+    if (not ($self->command('STARTTLS')->response() == Net::Cmd::CMD_OK)){
+        $tb->ok(0, $name);
+        $self->_smtp_diag;
+        return;
+    }
+    if (not $self->_convert_to_ssl()){
+        $tb->ok(0, $name);
+        $tb->diag('SSL: ' . IO::Socket::SSL::errstr());
+        return;
+    }
+
+    $tb->ok(1, $name);
+}
+
+=item starttls_ko($name)
+
+Start TLS conversation with the server. Pass if server said that it's not OK to start TLS or if the SSL negotiation failed.
+
+=cut
+
+sub starttls_ko {
+    my ($self, $name) = @_;
+    my $tb = __PACKAGE__->builder();
+
+    if (not ($self->command('STARTTLS')->response() == Net::Cmd::CMD_OK)){
+        $tb->ok(1, $name);
+	return;
+    }
+    if (not $self->_convert_to_ssl()){
+        $tb->ok(1, $name);
+	return;
+    }
+    
+    $tb->ok(0, $name);
+    $self->_smtp_diag;
+    $tb->diag('And SSL negotiation went OK');
+}
+
+sub _convert_to_ssl {
+    my ($self) = @_;
+    use IO::Socket::SSL qw(debug4);
+    require IO::Socket::SSL or die "starttls requires IO::Socket::SSL";
+    # the socket is stored in ${*self}{'_ssl_sock'}.
+    # If not, when starttls sub ends *$self is not tied to the SSL
+    # socket anymore, instead, it's tied to the old socket.
+    my $ssl_sock = IO::Socket::SSL->new_from_fd($self->fileno)
+      or return 0;
+    ${*self}{'_ssl_sock'} = $ssl_sock;
+    *$self = *$ssl_sock;
+}
+
+=item hello_ok($hello, $name)
+
+Do EHLO/HELO negotiation. Useful only after starttls_ok/ko
+
+=cut
+
+sub hello_ok {
+    my ($self, $hello, $name) = @_;
+    my $tb = __PACKAGE__->builder();
+
+    if ($self->hello($hello)){
+        $tb->ok(1, $name);
+    } else {
+        $tb->ok(0, $name);
+	$self->_smtp_diag;
+    }
+}
+
+=item hello_ko($hello, $name)
+
+Do EHLO/HELO negotiation. Useful only after starttls_ok/ko
+
+=cut
+
+sub hello_ko {
+    my ($self, $hello, $name) = @_;
+    my $tb = __PACKAGE__->builder();
+
+    if ($self->hello($hello)){
+        $tb->ok(0, $name);
+        $self->_smtp_diag;
+    } else {
+        $tb->ok(1, $name);
+    }
+}
+
 
 =item rset_ok($name)
 

@@ -9,14 +9,16 @@ WriteMakefile(
     AUTHOR       => 'Jose Luis Martinez (jlmartinez@capside.com)',
     ABSTRACT     => 'Module to write SMTP Server tests',
     PREREQ_PM    => {
-                     'Test::Simple' => 0.44,
-                     'Net::SMTP'    => 0,
-                     'Test::Builder::Module' => 0,
-                     'Test::More'   => 0.62,
-                     'Test::Builder::Tester' => 1.02,
-                     'Test::Exception'       => 0.21,
-                     'Net::Server::Mail'     => 0.13,
-                     'Test::Pod'             => 1.00,
-		     'Test::Pod::Coverage'   => 1.00
+                     'Test::Simple'                   => 0.44,
+                     'Net::SMTP_auth'                 => 0,
+                     'Test::Builder::Module'          => 0,
+                     'Test::More'                     => 0.62,
+                     'Test::Builder::Tester'          => 1.02,
+                     'Test::Exception'                => 0.21,
+                     'Net::Server::Mail'              => 0.13,
+		     'Net::Server::Mail::ESMTP::AUTH' => 0,
+                     'Test::Pod'                      => 1.00,
+		     'Test::Pod::Coverage'            => 1.00
                     },
+    LICENSE      => 'perl'
 );

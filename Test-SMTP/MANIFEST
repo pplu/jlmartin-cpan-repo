@@ -1,17 +1,20 @@
-MANIFEST
-README
-LICENSE
-Todo
 Changes
-Makefile.PL
 lib/Test/SMTP.pm
+LICENSE
+Makefile.PL
+MANIFEST
+META.yml
+README
 t/001_load.t
 t/002_cantconnect.t
 t/003_basic.t
 t/004_autohello.t
 t/005_fail_tests.t
 t/006_plan.t
+t/007_tls.t
+t/008_pass_auth.t
+t/Net/Server/Mail/ESMTP/SIZE.pm
+t/Net/Server/Mail/ESMTP/STARTTLS.pm
 t/pod.t
 t/podcoverage.t
-t/Net/Server/Mail/ESMTP/SIZE.pm
-META.yml                                 Module meta-data (added by MakeMaker)
+Todo

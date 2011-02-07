@@ -1,14 +1,26 @@
 # -*- perl -*-
 
+use strict;
+use warnings;
+
 use IO::Socket;
 use Net::Server::Mail::ESMTP;
 use Test::SMTP;
 use Test::More;
 use Test::Builder::Tester tests => 2;
 
-my $LOCAL_PORT = ($ENV{'SMTP_SERVER_PORT'} || 25000) + 1;
+my $LOCAL_PORT = ($ENV{'SMTP_SERVER_PORT'} || 2525) + 1;
 
 #spawn off a server
+
+    my $server;
+    while(not defined $server && $LOCAL_PORT < 4000)
+    {
+        $server = new IO::Socket::INET(
+            Listen => 1,
+            LocalPort => ++$LOCAL_PORT
+        );
+    }
 
 my $server_pid;
 
@@ -16,12 +28,6 @@ $server_pid = fork();
 
 if ($server_pid == 0){
     # I'm the child process
-    my $server = IO::Socket::INET->new(Listen => 1000, 
-                                       LocalAddr => '127.0.0.1', 
-				       LocalPort => $LOCAL_PORT,
-				       Proto => 'tcp')
-       or die "Can't create socket $!";
-
     my $conn_number = 0;
     my $conn;
     while ($conn = $server->accept)
@@ -250,3 +256,6 @@ test_fail(+1);
 $c2->quit_ok('Fails because QUIT was rejected');
 
 test_test(name => "Planned failures work ok", skip_err => 1);
+
+kill 1, $server_pid;
+wait;
