@@ -5,6 +5,7 @@ lib/Nagios/Plugin/DieNicely.pm
 LICENSE
 Makefile.PL
 MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
 README
 t/001_load.t
 t/002_test_outputs.t
@@ -33,6 +34,7 @@ t/bin/extmodule_that_catches_confess.pl
 t/bin/extmodule_that_catches_croak.pl
 t/bin/extmodule_that_catches_die.pl
 t/bin/misuse.pl
+t/bin/notok_using_die_in_begin.t
 t/bin/ok_confess_in_extmodule.pl
 t/bin/ok_confess_in_module.pl
 t/bin/ok_confess_in_script.pl
@@ -42,6 +44,7 @@ t/bin/ok_croak_in_script.pl
 t/bin/ok_die_in_extmodule.pl
 t/bin/ok_die_in_module.pl
 t/bin/ok_die_in_script.pl
+t/bin/ok_using_evalmodule.t
 t/bin/unknown_confess_in_extmodule.pl
 t/bin/unknown_confess_in_module.pl
 t/bin/unknown_confess_in_script.pl
@@ -60,8 +63,9 @@ t/bin/warning_croak_in_script.pl
 t/bin/warning_die_in_extmodule.pl
 t/bin/warning_die_in_module.pl
 t/bin/warning_die_in_script.pl
+t/lib/DieModule.pm
+t/lib/EvalModule.pm
 t/lib/FakeModule.pm
 t/pod.t
 t/podcoverage.t
 Todo
-META.yml                                 Module meta-data (added by MakeMaker)

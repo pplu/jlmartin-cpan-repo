@@ -3,10 +3,8 @@ package Nagios::Plugin::DieNicely;
 use warnings;
 use strict;
 
-BEGIN {
-     use vars qw($VERSION);
-     $VERSION     = '0.03';
-}
+use vars qw($VERSION);
+$VERSION     = '0.04';
 
 our ($wanted_exit, $exit_description);
 
@@ -23,7 +21,8 @@ sub import {
         $exit = 'CRITICAL';
     }
     if (not defined $translation->{$exit}){
-        die "Nagios::Plugin::DieNicely doesn't know how to exit $exit";
+        print "Nagios::Plugin::DieNicely doesn't know how to exit $exit\n";
+        exit 3;
     } 
     
     $wanted_exit = $translation->{$exit};
@@ -33,6 +32,8 @@ sub import {
 
 sub _nagios_die {
     die @_ if $^S;
+    die @_ if (not defined $^S);
+
     if (not defined $wanted_exit){
         # If someone only requires the module, and import is not called,
 	# wanted_exit would be undefined. We also get here when the 

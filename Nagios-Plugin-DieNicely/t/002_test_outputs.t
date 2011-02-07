@@ -68,7 +68,14 @@ my $tests = [
 	{ 'plugin' => './t/bin/extmodule_that_catches_confess.pl', text => 'OK', ecode => 0 },
 
 	#Misuse of the module
-	{ 'plugin' => './t/bin/misuse.pl', text => 'Nagios::Plugin::DieNicely doesn\'t know how to exit NOTANAGIOSSTATE', ecode => 2 },
+	{ 'plugin' => './t/bin/misuse.pl', text => 'Nagios::Plugin::DieNicely doesn\'t know how to exit NOTANAGIOSSTATE', ecode => 3 },
+
+        # Modules that do eval in BEGIN block
+        { 'plugin' => './t/bin/ok_using_evalmodule.t', text => 'exited in a normal manner', ecode => 0 },
+
+        # This plugin uses a module that dies in a BEGIN
+        # The error is not outputted via STDOUT and exit code is set to 9
+        { 'plugin' => './t/bin/notok_using_die_in_begin.t', text => '', ecode => 9 }
 ];
 
 plan tests => (scalar(@$tests) * 2);
