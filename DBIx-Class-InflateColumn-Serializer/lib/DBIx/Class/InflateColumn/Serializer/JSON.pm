@@ -35,7 +35,7 @@ The data structures you assign to "data_column" will be saved in the database in
 
 use strict;
 use warnings;
-use JSON::Any;
+use JSON qw//;
 use Carp;
 
 =over 4
@@ -53,13 +53,13 @@ sub get_freezer{
   if (defined $info->{'size'}){
       my $size = $info->{'size'};
       return sub {
-        my $s = JSON::Any->to_json(shift);
+        my $s = JSON::to_json(shift);
         croak "serialization too big" if (length($s) > $size);
         return $s;
       };
   } else {
       return sub {
-        return JSON::Any->to_json(shift);
+        return JSON::to_json(shift);
       };
   }
 }
@@ -73,7 +73,7 @@ the data stored in the column. Returns a coderef.
 
 sub get_unfreezer {
   return sub {
-    return JSON::Any->from_json(shift);
+    return JSON::from_json(shift);
   };
 }
 

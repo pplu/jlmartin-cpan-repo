@@ -1,4 +1,12 @@
 Changes
+inc/Module/Install.pm
+inc/Module/Install/Base.pm
+inc/Module/Install/Can.pm
+inc/Module/Install/Fetch.pm
+inc/Module/Install/Makefile.pm
+inc/Module/Install/Metadata.pm
+inc/Module/Install/Win32.pm
+inc/Module/Install/WriteAll.pm
 lib/DBIx/Class/InflateColumn/Serializer.pm
 lib/DBIx/Class/InflateColumn/Serializer/JSON.pm
 lib/DBIx/Class/InflateColumn/Serializer/Storable.pm
@@ -6,6 +14,7 @@ lib/DBIx/Class/InflateColumn/Serializer/YAML.pm
 LICENSE
 Makefile.PL
 MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
 README
 t/001_load.t
 t/002_storable.t
@@ -22,4 +31,3 @@ t/lib/sqlite.sql
 t/pod.t
 t/podcoverage.t
 Todo
-META.yml                                 Module meta-data (added by MakeMaker)

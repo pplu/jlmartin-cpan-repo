@@ -3,7 +3,7 @@ package DBIx::Class::InflateColumn::Serializer;
 use strict;
 use warnings;
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 sub register_column {
     my $self = shift;
@@ -106,6 +106,8 @@ LICENSE file included with this module.
 =head1 THANKS
 
 Matt S Trout for his valuable feedback
+
+Ask Bjorn Hansen
 
 =head1 SEE ALSO
 

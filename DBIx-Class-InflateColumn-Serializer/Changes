@@ -11,3 +11,7 @@ Revision history for Perl module DBIx::Class::InflateColumn::Serializer
       serializer_class => 'JSON', serializer_class => 'YAML',
       serializer_class => 'Storable'
 
+0.03 Mon Feb 7 18:48:00 2011
+    - Migrate to Module::Install
+    - Declare test_requires and optional packages (solves RT #64925)
+    - use JSON instead of JSON::Any (RT #61551)
