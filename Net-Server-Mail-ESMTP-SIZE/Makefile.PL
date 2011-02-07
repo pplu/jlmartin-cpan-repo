@@ -13,4 +13,5 @@ WriteMakefile(
 		     'Test::SMTP'   => 0.02,
 		     'Net::Server::Mail' => 0.13
                     },
+    LICENSE      => 'perl'
 );

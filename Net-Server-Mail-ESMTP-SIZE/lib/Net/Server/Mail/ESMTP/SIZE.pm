@@ -3,7 +3,7 @@ package Net::Server::Mail::ESMTP::SIZE;
 use strict;
 use base qw(Net::Server::Mail::ESMTP::Extension);
 use vars qw($VERSION);
-$VERSION     = '0.01';
+$VERSION     = '0.02';
 
 sub init {
     my ($self, $parent) = @_;
