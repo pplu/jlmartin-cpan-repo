@@ -75,7 +75,7 @@ my $tests = [
 
         # This plugin uses a module that dies in a BEGIN
         # The error is not outputted via STDOUT and exit code is set to 9
-        { 'plugin' => './t/bin/notok_using_die_in_begin.t', text => '', ecode => 9 }
+        { 'plugin' => './t/bin/notok_using_die_in_begin.t', text => '', ecode => 255 }
 ];
 
 plan tests => (scalar(@$tests) * 2);

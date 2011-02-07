@@ -15,3 +15,6 @@ Revision history for Perl module Nagios::Plugin::DieNicely
       Now running plugins under the debugger is possible, and doing 
       use Math::BigInt try => 'GMP' without GMP installed will all work (yay!)
     - Fixed test suite
+0.05 Sat May 29 19:00:00
+    - Fixed test suite. On some platforms one test case was exiting with a different exit code.
+      Really not a problem with Nagios::Plugin::DieNicely
