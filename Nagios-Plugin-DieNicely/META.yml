@@ -1,12 +1,15 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         Nagios-Plugin-DieNicely
-version:      0.01
-version_from: lib/Nagios/Plugin/DieNicely.pm
-installdirs:  site
-requires:
+--- #YAML:1.0
+name:                Nagios-Plugin-DieNicely
+version:             0.02
+abstract:            Die in a Nagios compatible fashion
+license:             perl
+author:              
+    - Jose Luis Martinez (jlmartinez@capside.com)
+generated_by:        ExtUtils::MakeMaker version 6.44
+distribution_type:   module
+requires:     
     Test::More:                    0.62
     Test::Simple:                  0.44
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.30_01
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3

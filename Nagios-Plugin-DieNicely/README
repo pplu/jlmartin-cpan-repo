@@ -4,7 +4,11 @@ NAME
 SYNOPSIS
       use Nagios::Plugin::DieNicely;
 
-      ... your code goes here ...
+      ... your plugin code goes here ...
+
+      use Nagios::Plugin::DieNicely 'WARNING';
+
+      ... now if you die, you will get a Nagios WARNING state ...
 
 DESCRIPTION
     When your Nagios plugins, or the modules that they use raise an
@@ -13,12 +17,22 @@ DESCRIPTION
     plugin, as STDERR gets discarded by Nagios.
 
     This module overrides perl's default behaviour of using exit code 255
-    and printing the error to STDERR for exit code 2 (Nagios CRITICAL), and
-    outputing the error to STDOUT with "CRITICAL - " prepended to the
-    exception.
+    and printing the error to STDERR (not Nagios friendly). Just using for
+    exit code 2 (Nagios CRITICAL), and outputing the error to STDOUT with
+    "CRITICAL - " prepended to the exception. Note that you can change the
+    CRITICAL for WARNING, or even OK (not recommended)
+
+USE
+    Just *use* the module. If you want a Nagios error code other that
+    CRITICAL, then use the module passing one of: *WARNING*, *OK*,
+    *UNKNOWN*. *CRITICAL* can be passed too (just for completeness).
+
+      use Nagios::Plugin::DieNicely 'WARNING';
+      use Nagios::Plugin::DieNicely 'UNKNOWN';
+      use Nagios::Plugin::DieNicely 'CRITICAL';
+      use Nagios::Plugin::DieNicely 'OK';
 
 TODO
-     - People might want WARNING (or OK) on die
      - Get the shortname of the module through Nagios::Plugin if it is beeing used
      - Issue perl warnings to STDOUT, and possbily issue WARNING or CRITICAL
 

@@ -1,19 +1,50 @@
 package Nagios::Plugin::DieNicely;
+
+use warnings;
 use strict;
 
 BEGIN {
      use vars qw($VERSION);
-     $VERSION     = '0.01';
+     $VERSION     = '0.02';
 }
 
+our ($wanted_exit, $exit_description);
 
-$SIG{__DIE__} = \&_nagios_die;
+sub import {
+    my ($class, $exit) = @_;
+    my $translation = {
+        'OK'       => 0,
+	'WARNING'  => 1,
+	'CRITICAL' => 2,
+	'UNKNOWN'  => 3
+    };
+    if (not defined $exit){
+        # by default we will exit critical
+        $exit = 'CRITICAL';
+    }
+    if (not defined $translation->{$exit}){
+        die "Nagios::Plugin::DieNicely doesn't know how to exit $exit";
+    } 
+    
+    $wanted_exit = $translation->{$exit};
+    $exit_description = $exit;
+}
+
 
 sub _nagios_die {
-    print "CRITICAL - ", @_;
-    # EXIT Nagios CRITICAL
-    exit 2;
+    if (not defined $wanted_exit){
+        # If someone only requires the module, and import is not called,
+	# wanted_exit would be undefined. We also get here when the 
+	# parameter passed to the class is not valid
+        $wanted_exit = 2;
+	$exit_description = 'CRITICAL';
+    }
+
+    print "$exit_description - ", @_;
+    exit $wanted_exit;
 }
+
+$SIG{__DIE__} = \&_nagios_die;
 
 =head1 NAME
 
@@ -23,17 +54,30 @@ Nagios::Plugin::DieNicely - Die in a Nagios output compatible way
 
   use Nagios::Plugin::DieNicely;
 
-  ... your code goes here ...
+  ... your plugin code goes here ...
+
+
+  use Nagios::Plugin::DieNicely 'WARNING';
+
+  ... now if you die, you will get a Nagios WARNING state ...
 
 =head1 DESCRIPTION
 
 When your Nagios plugins, or the modules that they use raise an exception with I<die>, I<croak> or I<confess>, the exception gets lost, and Nagios treats the output as an UNKNOWN state with no output from the plugin, as STDERR gets discarded by Nagios.
 
-This module overrides perl's default behaviour of using exit code 255 and printing the error to STDERR for exit code 2 (Nagios CRITICAL), and outputing the error to STDOUT with "CRITICAL - " prepended to the exception.
+This module overrides perl's default behaviour of using exit code 255 and printing the error to STDERR (not Nagios friendly). Just using for exit code 2 (Nagios CRITICAL), and outputing the error to STDOUT with "CRITICAL - " prepended to the exception. Note that you can change the CRITICAL for WARNING, or even OK (not recommended)
+
+=head1 USE
+
+Just I<use> the module. If you want a Nagios error code other that B<CRITICAL>, then use the module passing one of: I<WARNING>, I<OK>, I<UNKNOWN>. I<CRITICAL> can be passed too (just for completeness).
+
+  use Nagios::Plugin::DieNicely 'WARNING';
+  use Nagios::Plugin::DieNicely 'UNKNOWN';
+  use Nagios::Plugin::DieNicely 'CRITICAL';
+  use Nagios::Plugin::DieNicely 'OK';
 
 =head1 TODO
 
- - People might want WARNING (or OK) on die
  - Get the shortname of the module through Nagios::Plugin if it is beeing used
  - Issue perl warnings to STDOUT, and possbily issue WARNING or CRITICAL
 

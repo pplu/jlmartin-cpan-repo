@@ -12,4 +12,5 @@ WriteMakefile(
                      'Test::Simple' => 0.44,
 		     'Test::More'   => 0.62,
                     },
+    LICENSE      => 'perl'
 );
