@@ -10,3 +10,7 @@ Revision history for Perl module Catalyst::View::RRDGraph
 
 0.03 Sun Oct 26 21:35:00 2008
     - use base instead of use parent in test suite
+
+0.04 Thu Mar 25 15:20:00 2010
+    - use MRO::Compat (patch courtesy Ton Voon)
+	- change to Module::Install so that build pre-reqs can be separated from runtime pre-reqs

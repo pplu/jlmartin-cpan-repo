@@ -5,10 +5,11 @@ use warnings;
 
 use base 'Catalyst::View';
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 use RRDs;
 use File::Temp qw();
+use MRO::Compat;
 
 sub new {
     my ($class, $c, $arguments) = @_;
@@ -20,7 +21,7 @@ sub new {
         (defined($arguments)?%{$arguments}:()),
     };
 
-    my $self = $class->NEXT::new(
+    my $self = $class->next::method(
         $c, { %$config },
     );
 

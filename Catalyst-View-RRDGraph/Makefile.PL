@@ -1,19 +1,20 @@
+use inc::Module::Install;
 
+# Define metadata
+name           'Catalyst-View-RRDGraph';
+version_from   'lib/Catalyst/View/RRDGraph.pm';
+author         'Jose Luis Martinez (jlmartinez@capside.com)';
+abstract       'RRD Graph View Class';
 
-use ExtUtils::MakeMaker;
-# See lib/ExtUtils/MakeMaker.pm for details of how to influence
-# the contents of the Makefile that is written.
-WriteMakefile(
-    NAME         => 'Catalyst::View::RRDGraph',
-    VERSION_FROM => 'lib/Catalyst/View/RRDGraph.pm', # finds \$VERSION
-    AUTHOR       => 'Jose Luis Martinez (jlmartinez@capside.com)',
-    ABSTRACT     => 'RRD Graph View Class',
-    PREREQ_PM    => {
-                     'Test::Simple' => 0.44,
-                     'Catalyst::Runtime' => 0,
-		     'Test::MockObject' => 0,
-                     'Catalyst::Plugin::Static::Simple' => '>= 0.17',
-		     'RRDs' => 0
-                    },
-    LICENSE      => 'perl'
-);
+requires       'Catalyst::Runtime'  => 0;
+requires       'Catalyst::Plugin::Static::Simple' => 0.17;
+requires       'RRDs' => 0;
+requires       'MRO::Compat' => 0;
+
+test_requires  'Test::Simple'  => '0.44';
+test_requires  'Test::MockObject' => 0;
+
+license 'perl';
+
+WriteAll;
+
