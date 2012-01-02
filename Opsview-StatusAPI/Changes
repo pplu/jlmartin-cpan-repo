@@ -3,3 +3,4 @@
 0.02 2012 Jan 02 23:48:00
  - Constructor doesn't require user and pass
  - Methods to change user and pass after construction
+ - Let filters have multiple values via ArrayRefs

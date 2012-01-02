@@ -105,7 +105,14 @@ sub _resolve_filter {
     if ((defined $filter->{'state'}) && (defined $states->{ $filter->{'state'} })) {
       $filter->{'state'} = $states->{ $filter->{'state'} };
     }
-    my $q = join '&', map { "$_=$filter->{$_}" } keys %$filter;
+    my $q = join '&', map {
+       if (ref($filter->{$_}) eq 'ARRAY'){
+          my $key = $_;
+          join '&', map { "$key=$_" } @{ $filter->{$_} }
+       } else {
+          "$_=$filter->{$_}";
+       }
+    } keys %$filter;
     $params = "?$q" if ($q);
   }
   return $params;
@@ -299,7 +306,11 @@ A filter is a hashref that can contain the following keys with these values:
 
   If you want all unhandled warnings, the filter would be
 
-  { 'filter' => 'unhandled', 'state' => 'warning' } 
+  { 'filter' => 'unhandled', 'state' => 'warning' }
+
+  keys can also have multiple values: if you want only WARNINGS and CRITICALS
+
+  { 'state' => [ 1, 2 ] } 
 
 =head1 AUTHOR
 
