@@ -4,3 +4,4 @@
  - Constructor doesn't require user and pass
  - Methods to change user and pass after construction
  - Let filters have multiple values via ArrayRefs
+ - Fix Undeclared dependency on Test::Exception RT #72991

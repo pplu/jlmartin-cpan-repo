@@ -14,7 +14,7 @@ requires       'JSON::Any' => 0;
 
 test_requires  'Test::Simple'  => 0;
 test_requires  'Test::Pod' => 0;
-
+test_requires  'Test::Exception' => 0;
 
 license 'perl';
 
