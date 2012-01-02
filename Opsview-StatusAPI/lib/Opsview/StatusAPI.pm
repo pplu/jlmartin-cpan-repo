@@ -42,7 +42,7 @@ use HTTP::Request;
 use LWP::UserAgent;
 use JSON::Any;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 our $states = { 'ok' => 0, 'warning' => '1', 'critical' => '2', 'unknown' => '3' };
 
