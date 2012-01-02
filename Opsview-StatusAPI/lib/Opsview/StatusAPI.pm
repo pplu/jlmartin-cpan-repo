@@ -92,7 +92,7 @@ sub _dorequest {
   if ($res->is_success){
     return ($self->{'_json'}->decode($res->content));
   } else {
-    die sprintf('Response from host: %s', $res->status_line);
+    die sprintf('Response from host: \'%s\' for \'%s\'', $res->status_line, $url);
   }
 }
 
